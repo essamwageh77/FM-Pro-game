@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "Player": {
+      "title": "Player",
+      "description": "A football player with attributes and history.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "nationality": { "type": "string" },
+        "position": { "type": "string", "enum": ["GK", "DEF", "MID", "FWD"] },
+        "rating": { "type": "number" },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "pace": { "type": "number" },
+            "shooting": { "type": "number" },
+            "passing": { "type": "number" },
+            "dribbling": { "type": "number" },
+            "defending": { "type": "number" },
+            "physical": { "type": "number" },
+            "stamina": { "type": "number" },
+            "potential": { "type": "number" }
+          }
+        },
+        "marketValue": { "type": "number" },
+        "salary": { "type": "number" },
+        "contractYears": { "type": "number" },
+        "teamId": { "type": "string" },
+        "isYouth": { "type": "boolean" }
+      },
+      "required": ["id", "name", "rating", "position"]
+    },
+    "Team": {
+      "title": "Team",
+      "description": "A football team managed by a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "managerId": { "type": "string" },
+        "budget": { "type": "number" },
+        "stadiumCapacity": { "type": "number" },
+        "fansBase": { "type": "number" },
+        "facilitiesLevel": { "type": "number" },
+        "youthAcademyLevel": { "type": "number" },
+        "tactics": {
+          "type": "object",
+          "properties": {
+            "formation": { "type": "string" },
+            "mentality": { "type": "string", "enum": ["Defensive", "Balanced", "Attacking"] },
+            "passingStyle": { "type": "string", "enum": ["Short", "Mixed", "Long"] },
+            "pressingIntensity": { "type": "number" }
+          }
+        }
+      },
+      "required": ["id", "name", "budget"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "A scheduled or completed football match.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "homeTeamId": { "type": "string" },
+        "awayTeamId": { "type": "string" },
+        "homeScore": { "type": "number" },
+        "awayScore": { "type": "number" },
+        "minute": { "type": "number" },
+        "status": { "type": "string", "enum": ["Scheduled", "Live", "Finished"] },
+        "leagueId": { "type": "string" }
+      }
+    },
+    "User": {
+      "title": "User",
+      "description": "A user account with a managed team.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "email": { "type": "string" },
+        "teamId": { "type": "string" }
+      },
+      "required": ["id", "username", "password"]
+    }
+  },
+  "firestore": {
+    "/Users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/players/{playerId}": {
+      "schema": "Player",
+      "description": "Global player database."
+    },
+    "/teams/{teamId}": {
+      "schema": "Team",
+      "description": "Managed teams."
+    },
+    "/leagues/{leagueId}/matches/{matchId}": {
+      "schema": "Match",
+      "description": "Match fixtures and results."
+    }
+  }
+}

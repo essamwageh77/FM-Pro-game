@@ -1,0 +1,8 @@
+{
+  "name": "FM Pro Manager PWA",
+  "description": "A professional football management simulation optimized as a fully-responsive Progressive Web App for mobile and desktop.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
