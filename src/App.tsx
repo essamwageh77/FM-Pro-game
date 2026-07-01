@@ -167,14 +167,14 @@ export default function App() {
               exit={{ opacity: 0, scale: 1.05 }}
               className="h-full flex flex-col items-center justify-center p-4 md:p-6 space-y-6 md:space-y-12 max-w-5xl mx-auto overflow-hidden"
             >
-              <div className="text-center space-y-1 md:space-y-2">
-                <h1 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent drop-shadow-2xl">
-                  HUB
+              <div className="text-center space-y-0.5 md:space-y-2">
+                <h1 className="text-4xl md:text-8xl font-black italic uppercase tracking-tighter leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent drop-shadow-2xl">
+                  FM PRO
                 </h1>
-                <p className="text-[8px] md:text-xs font-black text-slate-500 uppercase tracking-[0.4em] italic">Football Manager Professional</p>
+                <p className="text-[7px] md:text-xs font-black text-slate-500 uppercase tracking-[0.4em] italic">Management Hub</p>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full max-h-[60vh] md:max-h-none overflow-y-auto md:overflow-visible pr-1 custom-scrollbar">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full max-h-[75vh] md:max-h-none overflow-y-auto md:overflow-visible pr-1 custom-scrollbar">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
@@ -209,7 +209,7 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="flex flex-col items-center gap-6">
+              <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center gap-4">
                   <button 
                     onClick={handleLogout}
@@ -222,7 +222,7 @@ export default function App() {
                   {deferredPrompt && (
                     <button 
                       onClick={handleInstallClick}
-                      className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20"
+                      className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest bg-emerald-500/5 px-4 py-1.5 rounded-full border border-emerald-500/10"
                     >
                       <Download size={12} className="md:w-3.5 md:h-3.5" />
                       Install App

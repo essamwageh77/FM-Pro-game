@@ -27,14 +27,12 @@ export default defineConfig(() => {
             {
               src: '/icon.jpg',
               sizes: '192x192',
-              type: 'image/jpeg',
-              purpose: 'any'
+              type: 'image/jpeg'
             },
             {
               src: '/icon.jpg',
               sizes: '512x512',
-              type: 'image/jpeg',
-              purpose: 'any maskable'
+              type: 'image/jpeg'
             }
           ]
         },
