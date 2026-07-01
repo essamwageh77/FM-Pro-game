@@ -17,6 +17,7 @@ export default defineConfig(() => {
           name: 'FM Pro Manager',
           short_name: 'FM Pro',
           description: 'A professional football management simulation',
+          id: '/',
           start_url: '/',
           scope: '/',
           theme_color: '#0f172a',
@@ -27,20 +28,23 @@ export default defineConfig(() => {
             {
               src: '/icon.jpg',
               sizes: '192x192',
-              type: 'image/jpeg'
+              type: 'image/jpeg',
+              purpose: 'any'
             },
             {
               src: '/icon.jpg',
               sizes: '512x512',
-              type: 'image/jpeg'
+              type: 'image/jpeg',
+              purpose: 'maskable'
             }
           ]
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
-          cleanupOutdatedCaches: true,
-          clientsClaim: true,
-          skipWaiting: true
+          navigateFallback: 'index.html'
+        },
+        devOptions: {
+          enabled: true
         }
       })
     ],

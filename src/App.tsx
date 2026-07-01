@@ -167,67 +167,65 @@ export default function App() {
               exit={{ opacity: 0, scale: 1.05 }}
               className="h-full flex flex-col items-center justify-center p-4 md:p-6 space-y-6 md:space-y-12 max-w-5xl mx-auto overflow-hidden"
             >
-              <div className="text-center space-y-0.5 md:space-y-2">
-                <h1 className="text-4xl md:text-8xl font-black italic uppercase tracking-tighter leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent drop-shadow-2xl">
+              <div className="text-center space-y-0.5 md:space-y-2 mb-2 md:mb-0">
+                <h1 className="text-3xl md:text-8xl font-black italic uppercase tracking-tighter leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent drop-shadow-2xl">
                   FM PRO
                 </h1>
-                <p className="text-[7px] md:text-xs font-black text-slate-500 uppercase tracking-[0.4em] italic">Management Hub</p>
+                <p className="text-[6px] md:text-xs font-black text-slate-500 uppercase tracking-[0.4em] italic">Management Hub</p>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full max-h-[75vh] md:max-h-none overflow-y-auto md:overflow-visible pr-1 custom-scrollbar">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full max-h-[80vh] md:max-h-none overflow-y-auto md:overflow-visible pr-1 custom-scrollbar">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className="group relative bg-white/5 border border-white/10 rounded-xl md:rounded-[2rem] p-3 md:p-6 text-left overflow-hidden transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 flex flex-col justify-between h-28 md:h-44 shadow-2xl"
+                    className="group relative bg-white/5 border border-white/10 rounded-xl md:rounded-[2rem] p-2.5 md:p-6 text-left overflow-hidden transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 flex flex-col justify-between h-24 md:h-44 shadow-2xl"
                   >
                     <div className={`absolute top-0 right-0 w-24 md:w-32 h-24 md:h-32 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity`} />
-                    <div className={`p-2 md:p-4 rounded-lg md:rounded-2xl bg-gradient-to-br ${item.color} w-fit shadow-xl group-hover:scale-110 transition-transform`}>
-                      <item.icon size={16} className="text-white md:hidden" />
+                    <div className={`p-1.5 md:p-4 rounded-lg md:rounded-2xl bg-gradient-to-br ${item.color} w-fit shadow-xl group-hover:scale-110 transition-transform`}>
+                      <item.icon size={14} className="text-white md:hidden" />
                       <item.icon size={24} className="text-white hidden md:block" />
                     </div>
                     <div>
-                      <h3 className="text-[11px] md:text-xl font-black italic uppercase tracking-tight text-white line-clamp-1">{item.label}</h3>
-                      <p className="text-[7px] md:text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5 md:mt-1 opacity-60 line-clamp-1">{item.desc}</p>
+                      <h3 className="text-[10px] md:text-xl font-black italic uppercase tracking-tight text-white line-clamp-1">{item.label}</h3>
+                      <p className="text-[6px] md:text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5 md:mt-1 opacity-60 line-clamp-1">{item.desc}</p>
                     </div>
                   </button>
                 ))}
 
                 <button
                   onClick={handleStartMatch}
-                  className="col-span-2 lg:col-span-1 group relative bg-emerald-500 rounded-xl md:rounded-[2rem] p-3 md:p-6 text-left overflow-hidden shadow-2xl shadow-emerald-900/40 active:scale-95 h-28 md:h-44 flex flex-col justify-between"
+                  className="col-span-2 lg:col-span-1 group relative bg-emerald-500 rounded-xl md:rounded-[2rem] p-2.5 md:p-6 text-left overflow-hidden shadow-2xl shadow-emerald-900/40 active:scale-95 h-24 md:h-44 flex flex-col justify-between"
                 >
                   <div className="absolute top-0 right-0 w-24 md:w-32 h-24 md:h-32 bg-white/20 blur-2xl opacity-50" />
-                  <div className="p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/20 w-fit shadow-xl">
-                    <Play size={16} className="text-white md:hidden" fill="currentColor" />
+                  <div className="p-1.5 md:p-4 rounded-lg md:rounded-2xl bg-white/20 w-fit shadow-xl">
+                    <Play size={14} className="text-white md:hidden" fill="currentColor" />
                     <Play size={24} className="text-white hidden md:block" fill="currentColor" />
                   </div>
                   <div>
-                    <h3 className="text-[11px] md:text-xl font-black italic uppercase tracking-tight text-white">PLAY MATCH</h3>
-                    <p className="text-[7px] md:text-xs text-emerald-950 font-black uppercase tracking-widest mt-0.5 md:mt-1">Next Fixture</p>
+                    <h3 className="text-[10px] md:text-xl font-black italic uppercase tracking-tight text-white">PLAY MATCH</h3>
+                    <p className="text-[6px] md:text-xs text-emerald-950 font-black uppercase tracking-widest mt-0.5 md:mt-1">Next Fixture</p>
                   </div>
                 </button>
               </div>
 
               <div className="flex flex-col items-center gap-4">
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-4">
                   <button 
                     onClick={handleLogout}
-                    className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest"
+                    className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors text-[10px] font-black uppercase tracking-widest"
                   >
-                    <LogOut size={12} className="md:w-3.5 md:h-3.5" />
+                    <LogOut size={12} />
                     Sign Out
                   </button>
 
-                  {deferredPrompt && (
-                    <button 
-                      onClick={handleInstallClick}
-                      className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest bg-emerald-500/5 px-4 py-1.5 rounded-full border border-emerald-500/10"
-                    >
-                      <Download size={12} className="md:w-3.5 md:h-3.5" />
-                      Install App
-                    </button>
-                  )}
+                  <button 
+                    onClick={handleInstallClick}
+                    className={`flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-all text-[10px] font-black uppercase tracking-widest bg-emerald-500/5 px-4 py-1.5 rounded-full border border-emerald-500/10 ${!deferredPrompt ? 'opacity-50 grayscale pointer-events-none' : ''}`}
+                  >
+                    <Download size={12} />
+                    {deferredPrompt ? 'Install App' : 'App Installed'}
+                  </button>
                 </div>
               </div>
             </motion.div>
