@@ -11,7 +11,8 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        injectRegister: 'auto',
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg', 'icon.jpg'],
         manifest: {
           name: 'FM Pro Manager',
           short_name: 'FM Pro',
@@ -19,9 +20,16 @@ export default defineConfig(() => {
           theme_color: '#0f172a',
           background_color: '#0f172a',
           display: 'standalone',
+          orientation: 'portrait',
           icons: [
             {
-              src: '/src/assets/images/fm_pro_icon_1782807115874.jpg',
+              src: '/icon.jpg',
+              sizes: '192x192',
+              type: 'image/jpeg',
+              purpose: 'any'
+            },
+            {
+              src: '/icon.jpg',
               sizes: '512x512',
               type: 'image/jpeg',
               purpose: 'any maskable'

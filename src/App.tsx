@@ -14,10 +14,7 @@ import {
   LogOut,
   ChevronLeft,
   Wallet,
-  LayoutDashboard,
-  Users,
-  Search,
-  DollarSign
+  Download
 } from 'lucide-react';
 import { Player, Team, MatchState, User } from './types';
 import { generateRealPlayers, generateInitialTeams } from './lib/mockData';
@@ -38,6 +35,26 @@ export default function App() {
   const [scoutingPlayers, setScoutingPlayers] = useState<Player[]>([]);
   const [allTeams, setAllTeams] = useState<Team[]>([]);
   const [activeMatch, setActiveMatch] = useState<MatchState | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      console.log('PWA: beforeinstallprompt event fired');
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
 
   useEffect(() => {
     // Check local storage for persistent session
@@ -192,13 +209,27 @@ export default function App() {
                 </button>
               </div>
 
-              <button 
-                onClick={handleLogout}
-                className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest"
-              >
-                <LogOut size={12} className="md:w-3.5 md:h-3.5" />
-                Sign Out
-              </button>
+              <div className="flex flex-col items-center gap-6">
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest"
+                  >
+                    <LogOut size={12} className="md:w-3.5 md:h-3.5" />
+                    Sign Out
+                  </button>
+
+                  {deferredPrompt && (
+                    <button 
+                      onClick={handleInstallClick}
+                      className="flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20"
+                    >
+                      <Download size={12} className="md:w-3.5 md:h-3.5" />
+                      Install App
+                    </button>
+                  )}
+                </div>
+              </div>
             </motion.div>
           ) : (
             <motion.div
