@@ -26,16 +26,16 @@ export default defineConfig(() => {
           orientation: 'portrait',
           icons: [
             {
-              src: '/icon.jpg',
+              src: 'icon.jpg',
               sizes: '192x192',
               type: 'image/jpeg',
               purpose: 'any'
             },
             {
-              src: '/icon.jpg',
+              src: 'icon.jpg',
               sizes: '512x512',
               type: 'image/jpeg',
-              purpose: 'maskable'
+              purpose: 'any'
             }
           ]
         },
