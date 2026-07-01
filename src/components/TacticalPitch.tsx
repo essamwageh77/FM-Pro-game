@@ -10,7 +10,7 @@ interface TacticalPitchProps {
   onFieldPlayers: Player[];
 }
 
-function PitchPosition({ position, player }: { position: PositionConfig; player?: Player }) {
+function PitchPosition({ position, player }: { position: PositionConfig; player?: Player; key?: string }) {
   const { setNodeRef, isOver } = useDroppable({
     id: position.id,
   });

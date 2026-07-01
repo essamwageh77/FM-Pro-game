@@ -6,6 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 interface DraggablePlayerProps {
   player: Player;
   isCompact?: boolean;
+  key?: string;
 }
 
 export default function DraggablePlayer({ player, isCompact }: DraggablePlayerProps) {
