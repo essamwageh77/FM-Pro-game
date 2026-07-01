@@ -21,84 +21,121 @@ export default function FinanceView({ team, players }: FinanceViewProps) {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <header>
-        <h2 className="text-3xl font-bold text-white mb-2">Club Finances</h2>
-        <p className="text-slate-400">Monitor cash flow, wages, and stadium revenue.</p>
+        <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter italic bg-gradient-to-r from-white via-white to-white/40 bg-clip-text text-transparent">
+          Club Accounting
+        </h2>
+        <p className="text-slate-400 font-medium">Strategic fiscal management and resource allocation.</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <div className="flex items-center gap-3 text-slate-500 mb-2">
-            <Wallet size={18} />
-            <span className="text-xs font-bold uppercase">Current Balance</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="p-8 rounded-3xl glass-card relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+            <Wallet size={64} className="text-emerald-400" />
           </div>
-          <div className="text-3xl font-bold text-white">€{(team.budget / 1000000).toFixed(1)}M</div>
-          <div className="flex items-center gap-1 text-emerald-400 text-xs mt-2 font-medium">
-            <ArrowUpRight size={14} />
-            +12.5% vs last month
+          <div className="flex items-center gap-3 text-slate-500 mb-4 relative z-10">
+            <Wallet size={18} className="text-emerald-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Net Reserves</span>
+          </div>
+          <div className="text-4xl font-black text-white relative z-10 tracking-tight italic">€{(team.budget / 1000000).toFixed(1)}M</div>
+          <div className="flex items-center gap-1 text-emerald-400 text-xs mt-4 font-black uppercase tracking-widest relative z-10">
+            <ArrowUpRight size={14} className="animate-bounce" />
+            +12.5% Growth
           </div>
         </div>
 
-        <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <div className="flex items-center gap-3 text-slate-500 mb-2">
-            <DollarSign size={18} />
-            <span className="text-xs font-bold uppercase">Weekly Wage Bill</span>
+        <div className="p-8 rounded-3xl glass-card relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+            <DollarSign size={64} className="text-red-400" />
           </div>
-          <div className="text-3xl font-bold text-white">€{(totalWeeklyWage / 1000).toFixed(0)}k</div>
-          <div className="flex items-center gap-1 text-red-400 text-xs mt-2 font-medium">
+          <div className="flex items-center gap-3 text-slate-500 mb-4 relative z-10">
+            <DollarSign size={18} className="text-emerald-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Wage Ceiling</span>
+          </div>
+          <div className="text-4xl font-black text-white relative z-10 tracking-tight italic">€{(totalWeeklyWage / 1000).toFixed(0)}k</div>
+          <div className="flex items-center gap-1 text-emerald-400/60 text-xs mt-4 font-black uppercase tracking-widest relative z-10">
             <ArrowDownRight size={14} />
-            -2.1% after releases
+            Optimization Active
           </div>
         </div>
 
-        <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <div className="flex items-center gap-3 text-slate-500 mb-2">
-            <Building2 size={18} />
-            <span className="text-xs font-bold uppercase">Facility Costs</span>
+        <div className="p-8 rounded-3xl glass-card relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+            <Building2 size={64} className="text-emerald-400" />
           </div>
-          <div className="text-3xl font-bold text-white">€{(team.facilitiesLevel * 50).toFixed(0)}k</div>
-          <div className="text-xs text-slate-500 mt-2 font-medium">Level {team.facilitiesLevel} Maintenance</div>
+          <div className="flex items-center gap-3 text-slate-500 mb-4 relative z-10">
+            <Building2 size={18} className="text-emerald-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Infra Budget</span>
+          </div>
+          <div className="text-4xl font-black text-white relative z-10 tracking-tight italic">€{(team.facilitiesLevel * 50).toFixed(0)}k</div>
+          <div className="text-[10px] text-slate-500 mt-4 font-black uppercase tracking-widest relative z-10">Maintenance Level {team.facilitiesLevel}</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <section className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <h3 className="text-lg font-bold text-white mb-6">Financial Trends</h3>
-          <div className="h-[300px] w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section className="lg:col-span-2 p-8 rounded-3xl glass-card">
+          <h3 className="text-xl font-black text-white mb-8 italic uppercase tracking-tight">Revenue Trajectory</h3>
+          <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="month" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px' }}
-                  itemStyle={{ color: '#f8fafc' }}
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                  dy={10}
                 />
-                <Area type="monotone" dataKey="revenue" stroke="#3b82f6" fillOpacity={1} fill="url(#colorRev)" />
+                <YAxis 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', backdropFilter: 'blur(10px)' }}
+                  itemStyle={{ color: '#10b981', fontWeight: 900, textTransform: 'uppercase', fontSize: '10px' }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="revenue" 
+                  stroke="#10b981" 
+                  strokeWidth={4}
+                  fillOpacity={1} 
+                  fill="url(#colorRev)" 
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </section>
 
-        <section className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <h3 className="text-lg font-bold text-white mb-6">Top Earners</h3>
+        <section className="p-8 rounded-3xl glass-card">
+          <h3 className="text-xl font-black text-white mb-8 italic uppercase tracking-tight">Financial Tiering</h3>
           <div className="space-y-4">
             {players.sort((a, b) => b.salary - a.salary).slice(0, 6).map((player) => (
-              <div key={player.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-800/30">
-                <div className="flex items-center gap-3">
-                  <div className="text-sm font-bold text-white">{player.name}</div>
-                  <div className="text-[10px] text-slate-500 uppercase tracking-widest">{player.position}</div>
+              <div key={player.id} className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 group hover:bg-emerald-500/10 transition-all duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center font-black text-emerald-400 text-xs border border-emerald-500/20">
+                    {player.rating}
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-white uppercase tracking-tight">{player.name}</div>
+                    <div className="text-[9px] text-slate-500 font-black uppercase tracking-widest">{player.position}</div>
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-bold text-white">€{(player.salary / 1000).toFixed(0)}k/w</div>
-                  <div className="text-[10px] text-slate-500">{(player.salary / totalWeeklyWage * 100).toFixed(1)}% of total</div>
+                  <div className="text-sm font-black text-emerald-400 tracking-tighter">€{(player.salary / 1000).toFixed(0)}k/w</div>
+                  <div className="text-[9px] text-slate-600 font-bold uppercase tracking-tighter">{(player.salary / totalWeeklyWage * 100).toFixed(1)}% Usage</div>
                 </div>
               </div>
             ))}

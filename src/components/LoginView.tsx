@@ -70,52 +70,69 @@ export default function LoginView({ onLogin }: LoginViewProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950">
+    <div className="min-h-screen relative bg-slate-950 flex items-center justify-center p-6 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/src/assets/images/soccer_stadium_dark_glassy_1782856262108.jpg" 
+          alt="Stadium Background" 
+          className="w-full h-full object-cover scale-110"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-slate-950/90" />
+      </div>
+
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+        className="w-full max-w-md relative z-10"
       >
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600/20 mb-4 border border-blue-500/20 shadow-lg shadow-blue-500/10">
-            <Trophy className="text-blue-400" size={32} />
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-emerald-600/10 mb-6 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+            <Trophy className="text-emerald-400" size={40} />
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">FM PRO</h1>
-          <p className="text-slate-400 mt-2">The ultimate football management simulation</p>
+          <h1 className="text-5xl font-black text-white tracking-tighter italic uppercase leading-none">FM PRO</h1>
+          <p className="text-slate-400 mt-3 font-semibold uppercase tracking-[0.2em] text-[10px]">Strategic Excellence Awaits</p>
         </div>
 
-        <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl">
-          <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            {isRegistering ? <UserPlus size={20} className="text-blue-400" /> : <LogIn size={20} className="text-blue-400" />}
-            {isRegistering ? 'Create Account' : 'Welcome Back'}
-          </h2>
+        <div className="glass-card p-10 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)]">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              {isRegistering ? <UserPlus size={22} /> : <LogIn size={22} />}
+            </div>
+            <h2 className="text-2xl font-black text-white italic uppercase tracking-tight">
+              {isRegistering ? 'Draft Your Career' : 'Manager Entrance'}
+            </h2>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-500 uppercase ml-1">Username</label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Username / ID</label>
+              <div className="relative group">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" size={20} />
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                  placeholder="gaffer_77"
+                  className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all placeholder:text-slate-700"
+                  placeholder="TheSpecialOne"
                 />
               </div>
             </div>
 
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-500 uppercase ml-1">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Access Token</label>
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" size={20} />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                  className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all placeholder:text-slate-700"
                   placeholder="••••••••"
                 />
               </div>
@@ -125,8 +142,9 @@ export default function LoginView({ onLogin }: LoginViewProps) {
               <motion.div 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium"
+                className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold flex items-center gap-2"
               >
+                <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse" />
                 {error}
               </motion.div>
             )}
@@ -134,24 +152,25 @@ export default function LoginView({ onLogin }: LoginViewProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-600/50 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98] mt-4"
+              className="w-full py-4.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-900/40 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-emerald-900/30 transition-all active:scale-[0.98] mt-4 group relative overflow-hidden"
             >
-              {loading ? 'Processing...' : (isRegistering ? 'Start Your Career' : 'Login to Dashboard')}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              {loading ? 'Validating...' : (isRegistering ? 'Initialize Contract' : 'Access Tactical Suite')}
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-800 text-center">
+          <div className="mt-10 pt-8 border-t border-white/5 text-center">
             <button 
               onClick={() => setIsRegistering(!isRegistering)}
-              className="text-slate-400 hover:text-white text-sm font-medium transition-colors"
+              className="text-slate-500 hover:text-emerald-400 text-xs font-black uppercase tracking-widest transition-all"
             >
-              {isRegistering ? 'Already have an account? Login' : "Don't have an account? Register"}
+              {isRegistering ? 'Already Licensed? Sign In' : "New Manager? Create Profile"}
             </button>
           </div>
         </div>
 
-        <p className="text-center text-slate-600 text-xs mt-8">
-          Classic Username/Password authentication via Firestore.
+        <p className="text-center text-slate-700 text-[9px] font-bold uppercase tracking-widest mt-10">
+          Professional Grade Simulation • Real-time Data Sync
         </p>
       </motion.div>
     </div>

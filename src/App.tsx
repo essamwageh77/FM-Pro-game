@@ -11,7 +11,13 @@ import {
   TrendingUp,
   GraduationCap,
   History,
-  LogOut
+  LogOut,
+  ChevronLeft,
+  Wallet,
+  LayoutDashboard,
+  Users,
+  Search,
+  DollarSign
 } from 'lucide-react';
 import { Player, Team, MatchState, User } from './types';
 import { generateRealPlayers, generateInitialTeams } from './lib/mockData';
@@ -26,7 +32,7 @@ import LoginView from './components/LoginView';
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('hub');
   const [myTeam, setMyTeam] = useState<Team | null>(null);
   const [squad, setSquad] = useState<Player[]>([]);
   const [scoutingPlayers, setScoutingPlayers] = useState<Player[]>([]);
@@ -70,8 +76,10 @@ export default function App() {
   };
 
   const handleStartMatch = () => {
-    if (!myTeam || allTeams.length < 1 || squad.length < 11) {
-      alert("You need at least 11 players in your squad to play a match!");
+    const onFieldPlayers = squad.filter(p => p.onFieldPosition);
+    
+    if (!myTeam || allTeams.length < 1 || onFieldPlayers.length < 11) {
+      alert("You need to place 11 players on the pitch in your Squad & Tactics page to start a match!");
       return;
     }
 
@@ -107,126 +115,141 @@ export default function App() {
     setActiveTab('match');
   };
 
-  const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'squad', label: 'Squad & Tactics', icon: Users },
-    { id: 'scouting', label: 'Scouting', icon: Search },
-    { id: 'finance', label: 'Finances', icon: DollarSign },
-    { id: 'history', label: 'History', icon: History },
+  const menuItems = [
+    { id: 'dashboard', label: 'Office', icon: LayoutDashboard, desc: 'Overview & News', color: 'from-blue-600 to-blue-400' },
+    { id: 'squad', label: 'Tactics', icon: Users, desc: 'Lineup & Tactics', color: 'from-emerald-600 to-emerald-400' },
+    { id: 'scouting', label: 'Market', icon: Search, desc: 'Sign Talent', color: 'from-purple-600 to-purple-400' },
+    { id: 'finance', label: 'Finance', icon: DollarSign, desc: 'Club Budget', color: 'from-amber-600 to-amber-400' },
+    { id: 'history', label: 'History', icon: History, desc: 'Past Results', color: 'from-slate-600 to-slate-400' },
   ];
 
-  if (authLoading) return <div className="flex items-center justify-center h-screen bg-slate-950 text-white">Loading...</div>;
+  if (authLoading) return <div className="flex items-center justify-center h-screen bg-slate-950 text-white font-black italic uppercase tracking-tighter">Loading...</div>;
   if (!user) return <LoginView onLogin={handleLogin} />;
-  if (!myTeam) return <div className="flex items-center justify-center h-screen bg-slate-950 text-white">Loading Club Data...</div>;
+  if (!myTeam) return <div className="flex items-center justify-center h-screen bg-slate-950 text-white font-black italic uppercase tracking-tighter">Initializing Club...</div>;
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-500/30 overflow-hidden flex-col lg:flex-row">
-      {/* Mobile Header */}
-      <header className="lg:hidden h-16 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between px-6 shrink-0 z-20">
-        <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent flex items-center gap-2">
-          <Trophy className="text-blue-400" size={20} />
-          FM Pro
-        </h1>
-        <div className="flex items-center gap-4">
-          <button onClick={handleStartMatch} className="p-2 bg-emerald-600 rounded-lg text-white">
-            <Play size={16} fill="currentColor" />
-          </button>
-          <button onClick={handleLogout} className="p-2 text-slate-400 hover:text-white">
-            <LogOut size={18} />
-          </button>
-        </div>
-      </header>
+    <div className="relative h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 overflow-hidden flex flex-col">
+      {/* Shared Background */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/src/assets/images/soccer_stadium_dark_glassy_1782856262108.jpg" 
+          alt="Stadium" 
+          className="w-full h-full object-cover opacity-20"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/60 to-slate-950" />
+      </div>
 
-      {/* Sidebar (Desktop) */}
-      <aside className="hidden lg:flex w-64 border-r border-slate-800 bg-slate-900/50 flex-col">
-        <div className="p-6">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent flex items-center gap-2">
-            <Trophy className="text-blue-400" size={24} />
-            FM Pro
-          </h1>
-        </div>
-
-        <nav className="flex-1 px-4 py-2 space-y-1">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                activeTab === item.id
-                  ? 'bg-blue-500/10 text-blue-400 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
-            >
-              <item.icon size={20} />
-              <span className="font-medium text-sm">{item.label}</span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-slate-800 space-y-2">
-          <button
-            onClick={handleStartMatch}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/20 transition-all active:scale-95"
-          >
-            <Play size={18} fill="currentColor" />
-            Next Match
-          </button>
-          
-          <button
-            onClick={handleLogout}
-            className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-xl font-medium flex items-center justify-center gap-2 transition-all active:scale-95 text-sm"
-          >
-            <LogOut size={16} />
-            Logout
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 pb-20 lg:pb-0">
+      <main className="relative flex-1 z-10 overflow-y-auto">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="p-4 md:p-8 max-w-7xl mx-auto"
-          >
-            {activeTab === 'dashboard' && <DashboardView team={myTeam} squad={squad} onNavigateToMarket={() => setActiveTab('scouting')} />}
-            {activeTab === 'squad' && <SquadView team={myTeam} players={squad} setPlayers={setSquad} setTeam={setMyTeam} />}
-            {activeTab === 'scouting' && <ScoutingView players={scoutingPlayers} myTeam={myTeam} setSquad={setSquad} setScoutingPlayers={setScoutingPlayers} setTeam={setMyTeam} />}
-            {activeTab === 'finance' && <FinanceView team={myTeam} players={squad} />}
-            {activeTab === 'history' && <HistoryView team={myTeam} players={squad} />}
-            {activeTab === 'match' && activeMatch && (
-              <MatchSimulationView
-                match={activeMatch}
-                homeTeam={myTeam}
-                awayTeam={allTeams.find(t => t.id !== myTeam.id)!}
-                homePlayers={squad}
-                awayPlayers={scoutingPlayers.slice(0, 11)}
-                onClose={() => setActiveTab('dashboard')}
-              />
-            )}
-          </motion.div>
+          {activeTab === 'hub' ? (
+            <motion.div
+              key="hub"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              className="h-full flex flex-col items-center justify-center p-4 md:p-6 space-y-6 md:space-y-12 max-w-5xl mx-auto overflow-hidden"
+            >
+              <div className="text-center space-y-1 md:space-y-2">
+                <h1 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent drop-shadow-2xl">
+                  HUB
+                </h1>
+                <p className="text-[8px] md:text-xs font-black text-slate-500 uppercase tracking-[0.4em] italic">Football Manager Professional</p>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full max-h-[60vh] md:max-h-none overflow-y-auto md:overflow-visible pr-1 custom-scrollbar">
+                {menuItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className="group relative bg-white/5 border border-white/10 rounded-xl md:rounded-[2rem] p-3 md:p-6 text-left overflow-hidden transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 flex flex-col justify-between h-28 md:h-44 shadow-2xl"
+                  >
+                    <div className={`absolute top-0 right-0 w-24 md:w-32 h-24 md:h-32 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity`} />
+                    <div className={`p-2 md:p-4 rounded-lg md:rounded-2xl bg-gradient-to-br ${item.color} w-fit shadow-xl group-hover:scale-110 transition-transform`}>
+                      <item.icon size={16} className="text-white md:hidden" />
+                      <item.icon size={24} className="text-white hidden md:block" />
+                    </div>
+                    <div>
+                      <h3 className="text-[11px] md:text-xl font-black italic uppercase tracking-tight text-white line-clamp-1">{item.label}</h3>
+                      <p className="text-[7px] md:text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5 md:mt-1 opacity-60 line-clamp-1">{item.desc}</p>
+                    </div>
+                  </button>
+                ))}
+
+                <button
+                  onClick={handleStartMatch}
+                  className="col-span-2 lg:col-span-1 group relative bg-emerald-500 rounded-xl md:rounded-[2rem] p-3 md:p-6 text-left overflow-hidden shadow-2xl shadow-emerald-900/40 active:scale-95 h-28 md:h-44 flex flex-col justify-between"
+                >
+                  <div className="absolute top-0 right-0 w-24 md:w-32 h-24 md:h-32 bg-white/20 blur-2xl opacity-50" />
+                  <div className="p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/20 w-fit shadow-xl">
+                    <Play size={16} className="text-white md:hidden" fill="currentColor" />
+                    <Play size={24} className="text-white hidden md:block" fill="currentColor" />
+                  </div>
+                  <div>
+                    <h3 className="text-[11px] md:text-xl font-black italic uppercase tracking-tight text-white">PLAY MATCH</h3>
+                    <p className="text-[7px] md:text-xs text-emerald-950 font-black uppercase tracking-widest mt-0.5 md:mt-1">Next Fixture</p>
+                  </div>
+                </button>
+              </div>
+
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors text-[9px] md:text-[10px] font-black uppercase tracking-widest"
+              >
+                <LogOut size={12} className="md:w-3.5 md:h-3.5" />
+                Sign Out
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="min-h-full flex flex-col"
+            >
+              {/* Top Navigation Bar */}
+              <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between shrink-0">
+                <button
+                  onClick={() => setActiveTab('hub')}
+                  className="group flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/5 transition-all active:scale-95"
+                >
+                  <ChevronLeft size={16} className="text-emerald-400 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Back to Hub</span>
+                </button>
+
+                <div className="flex items-center gap-3">
+                  <div className="hidden sm:flex flex-col items-end mr-2">
+                    <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Balance</span>
+                    <span className="text-xs font-mono font-bold text-emerald-400">€{((myTeam?.finances?.balance || 0) / 1000000).toFixed(1)}M</span>
+                  </div>
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-black italic text-white shadow-lg shadow-emerald-900/20">
+                    {myTeam?.name.charAt(0)}
+                  </div>
+                </div>
+              </header>
+
+              <div className="p-4 md:p-8 flex-1 max-w-7xl mx-auto w-full">
+                {activeTab === 'dashboard' && <DashboardView team={myTeam} squad={squad} onNavigateToMarket={() => setActiveTab('scouting')} />}
+                {activeTab === 'squad' && <SquadView team={myTeam} players={squad} setPlayers={setSquad} setTeam={setMyTeam} />}
+                {activeTab === 'scouting' && <ScoutingView players={scoutingPlayers} myTeam={myTeam} setSquad={setSquad} setScoutingPlayers={setScoutingPlayers} setTeam={setMyTeam} />}
+                {activeTab === 'finance' && <FinanceView team={myTeam} players={squad} />}
+                {activeTab === 'history' && <HistoryView team={myTeam} players={squad} />}
+                {activeTab === 'match' && activeMatch && (
+                  <MatchSimulationView
+                    match={activeMatch}
+                    homeTeam={myTeam}
+                    awayTeam={allTeams.find(t => t.id !== myTeam.id)!}
+                    homePlayers={squad.filter(p => p.onFieldPosition)}
+                    awayPlayers={scoutingPlayers.slice(0, 11)}
+                    onClose={() => setActiveTab('hub')}
+                  />
+                )}
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
-
-      {/* Bottom Nav (Mobile) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 flex items-center justify-around px-2 z-20">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 ${
-              activeTab === item.id ? 'text-blue-400' : 'text-slate-500'
-            }`}
-          >
-            <item.icon size={20} />
-            <span className="text-[10px] font-medium uppercase tracking-wider">{item.label}</span>
-          </button>
-        ))}
-      </nav>
     </div>
   );
 }

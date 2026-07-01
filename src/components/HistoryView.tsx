@@ -23,80 +23,123 @@ export default function HistoryView({ team, players }: HistoryViewProps) {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <header>
-        <h2 className="text-3xl font-bold text-white mb-2">Club History & Trends</h2>
-        <p className="text-slate-400">Long-term analysis of player performance and league standings.</p>
+        <h2 className="text-4xl font-black text-white mb-2 uppercase tracking-tighter italic bg-gradient-to-r from-white via-white to-white/40 bg-clip-text text-transparent">
+          Legacy & Analytics
+        </h2>
+        <p className="text-slate-400 font-medium">Historical performance audit and developmental trends.</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <section className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <TrendingUp className="text-blue-400" size={20} />
-              League Performance
+        <section className="p-8 rounded-3xl glass-card">
+          <div className="flex items-center justify-between mb-10">
+            <h3 className="text-xl font-black text-white flex items-center gap-3 italic uppercase tracking-tight">
+              <TrendingUp className="text-emerald-400" size={24} />
+              Performance Curve
             </h3>
-            <span className="text-xs text-slate-500 uppercase font-bold tracking-widest">Points Trend</span>
+            <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Points Index</span>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={performanceData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="season" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px' }}
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+                <XAxis 
+                  dataKey="season" 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                  dy={10}
                 />
-                <Line type="monotone" dataKey="points" stroke="#3b82f6" strokeWidth={3} dot={{ fill: '#3b82f6', r: 4 }} />
+                <YAxis 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', backdropFilter: 'blur(10px)' }}
+                  itemStyle={{ color: '#10b981', fontWeight: 900, textTransform: 'uppercase', fontSize: '10px' }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="points" 
+                  stroke="#10b981" 
+                  strokeWidth={4} 
+                  dot={{ fill: '#10b981', r: 6, strokeWidth: 2, stroke: '#0f172a' }} 
+                  activeDot={{ r: 8, strokeWidth: 0 }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </section>
 
-        <section className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <BarChart3 className="text-emerald-400" size={20} />
-              Squad Composition
+        <section className="p-8 rounded-3xl glass-card">
+          <div className="flex items-center justify-between mb-10">
+            <h3 className="text-xl font-black text-white flex items-center gap-3 italic uppercase tracking-tight">
+              <BarChart3 className="text-emerald-400" size={24} />
+              Tactical Balance
             </h3>
-            <span className="text-xs text-slate-500 uppercase font-bold tracking-widest">Position Count</span>
+            <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Depth Metrics</span>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={squadDepth}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="pos" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px' }}
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+                <XAxis 
+                  dataKey="pos" 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                  dy={10}
                 />
-                <Bar dataKey="count" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <YAxis 
+                  stroke="#475569" 
+                  fontSize={10} 
+                  fontWeight={900}
+                  tickLine={false} 
+                  axisLine={false} 
+                />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', backdropFilter: 'blur(10px)' }}
+                />
+                <Bar 
+                  dataKey="count" 
+                  fill="#10b981" 
+                  radius={[10, 10, 0, 0]} 
+                  opacity={0.8}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </section>
       </div>
 
-      <section className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800">
-        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-          <Award className="text-yellow-400" size={20} />
-          Player Records
+      <section className="p-8 rounded-3xl glass-card">
+        <h3 className="text-xl font-black text-white mb-8 flex items-center gap-3 italic uppercase tracking-tight">
+          <Award className="text-yellow-500" size={24} />
+          Hall of Records
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4 rounded-xl bg-slate-800/30">
-            <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Most Apps</div>
-            <div className="text-lg font-bold text-white">Leo Becker</div>
-            <div className="text-xs text-blue-400">124 Matches</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 group hover:bg-emerald-500/10 transition-all duration-300">
+            <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-2 group-hover:text-emerald-400 transition-colors">Most Appearances</div>
+            <div className="text-xl font-black text-white italic tracking-tight">Leo Becker</div>
+            <div className="text-xs text-emerald-500/80 font-black mt-1 uppercase tracking-widest">124 Matches</div>
           </div>
-          <div className="p-4 rounded-xl bg-slate-800/30">
-            <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Top Goalscorer</div>
-            <div className="text-lg font-bold text-white">Cristiano Kane</div>
-            <div className="text-xs text-red-400">82 Goals</div>
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 group hover:bg-emerald-500/10 transition-all duration-300">
+            <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-2 group-hover:text-emerald-400 transition-colors">Elite Goalscorer</div>
+            <div className="text-xl font-black text-white italic tracking-tight">Cristiano Kane</div>
+            <div className="text-xs text-red-500/80 font-black mt-1 uppercase tracking-widest">82 Goals</div>
           </div>
-          <div className="p-4 rounded-xl bg-slate-800/30">
-            <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Best Rating</div>
-            <div className="text-lg font-bold text-white">Kevin Modric</div>
-            <div className="text-xs text-emerald-400">8.42 Avg</div>
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 group hover:bg-emerald-500/10 transition-all duration-300">
+            <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-2 group-hover:text-emerald-400 transition-colors">Tactical Precision</div>
+            <div className="text-xl font-black text-white italic tracking-tight">Kevin Modric</div>
+            <div className="text-xs text-emerald-400 font-black mt-1 uppercase tracking-widest">8.42 Avg Rating</div>
           </div>
         </div>
       </section>

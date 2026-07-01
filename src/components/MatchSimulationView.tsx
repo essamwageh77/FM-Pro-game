@@ -51,74 +51,100 @@ export default function MatchSimulationView({
   }, [match.events]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col overflow-hidden">
+      {/* Background Stadium */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/src/assets/images/soccer_stadium_dark_glassy_1782856262108.jpg" 
+          alt="Stadium Background" 
+          className="w-full h-full object-cover opacity-20 scale-105"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-slate-950/90" />
+      </div>
+
       {/* Scoreboard */}
-      <header className="p-4 md:p-8 bg-slate-900 border-b border-slate-800 shrink-0">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 md:gap-8 text-center flex-1 w-full md:w-auto">
+      <header className="p-6 md:p-10 relative z-10 shrink-0">
+        <div className="max-w-5xl mx-auto glass-card rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.8)]">
+          <div className="flex items-center gap-4 md:gap-12 text-center flex-1 w-full md:w-auto">
             <div className="flex-1 text-center md:text-right">
-              <div className="text-xl md:text-4xl font-black text-white truncate">{homeTeam.name}</div>
-              <div className="text-slate-500 uppercase tracking-widest text-[10px] md:text-xs mt-1">Home</div>
+              <div className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter truncate leading-none mb-2">{homeTeam.name}</div>
+              <div className="text-emerald-500/60 uppercase tracking-[0.3em] text-[10px] font-black">Home Advantage</div>
             </div>
             
-            <div className="px-4 py-2 md:px-8 md:py-4 bg-slate-800 rounded-2xl md:rounded-3xl border border-slate-700 shadow-2xl shrink-0">
-              <div className="text-3xl md:text-6xl font-black text-white flex items-center gap-2 md:gap-4">
-                {match.homeScore} <span className="text-slate-600">:</span> {match.awayScore}
+            <div className="px-6 py-4 md:px-12 md:py-8 bg-white/5 rounded-3xl border border-white/10 shadow-inner flex flex-col items-center justify-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-emerald-500/5 group-hover:bg-emerald-500/10 transition-colors duration-500" />
+              <div className="text-4xl md:text-8xl font-black text-white flex items-center gap-4 md:gap-8 relative z-10 leading-none">
+                {match.homeScore} <span className="text-white/20 font-light italic text-2xl md:text-5xl">-</span> {match.awayScore}
               </div>
-              <div className="text-emerald-400 font-mono text-sm md:text-xl mt-1 flex items-center justify-center gap-1 md:gap-2">
-                {match.minute}'
-                {match.status === 'Live' && <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1, repeat: Infinity }}>●</motion.span>}
+              <div className="text-emerald-400 font-mono text-sm md:text-2xl mt-4 flex items-center justify-center gap-2 relative z-10 font-black italic">
+                <span className="bg-emerald-500/20 px-3 py-1 rounded-lg border border-emerald-500/30">
+                  {match.minute}<span className="animate-pulse">'</span>
+                </span>
+                {match.status === 'Live' && <span className="text-xs uppercase tracking-widest text-emerald-500/50">Live</span>}
               </div>
             </div>
 
             <div className="flex-1 text-center md:text-left">
-              <div className="text-xl md:text-4xl font-black text-white truncate">{awayTeam.name}</div>
-              <div className="text-slate-500 uppercase tracking-widest text-[10px] md:text-xs mt-1">Away</div>
+              <div className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter truncate leading-none mb-2">{awayTeam.name}</div>
+              <div className="text-slate-500 uppercase tracking-[0.3em] text-[10px] font-black">Visiting Squad</div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Simulation Area */}
-      <main className="flex-1 overflow-hidden flex flex-col lg:grid lg:grid-cols-3 gap-4 md:gap-8 p-4 md:p-8 max-w-7xl mx-auto w-full">
+      <main className="flex-1 overflow-hidden flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-10 p-4 md:p-10 max-w-7xl mx-auto w-full relative z-10">
         {/* Commentary */}
-        <section className="flex-1 lg:col-span-2 flex flex-col min-h-0 bg-slate-900/50 rounded-2xl md:rounded-3xl border border-slate-800 overflow-hidden">
-          <div className="p-4 md:p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900">
-            <h3 className="text-sm md:text-lg font-bold text-white">Live Match Feed</h3>
-            <div className="flex items-center gap-2">
+        <section className="flex-1 lg:col-span-2 flex flex-col min-h-0 glass-card rounded-[2.5rem] overflow-hidden">
+          <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between bg-white/5 backdrop-blur-3xl">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <h3 className="text-sm md:text-xl font-black text-white italic uppercase tracking-tight leading-none">Live Match Report</h3>
+            </div>
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsPaused(!isPaused)}
-                className="p-1.5 md:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+                className="p-2 md:p-3 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-all border border-white/5"
               >
-                {isPaused ? <Play size={18} fill="currentColor" /> : <Pause size={18} fill="currentColor" />}
+                {isPaused ? <Play size={22} fill="currentColor" /> : <Pause size={22} fill="currentColor" />}
               </button>
               <button
                 onClick={() => setSimSpeed(prev => prev === 1000 ? 200 : 1000)}
-                className={`p-1.5 md:p-2 rounded-lg transition-colors ${simSpeed === 200 ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+                className={`p-2 md:p-3 rounded-xl transition-all border font-black text-xs px-4 ${simSpeed === 200 ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg shadow-emerald-900/40' : 'bg-white/5 text-slate-400 border-white/5 hover:text-white'}`}
               >
-                <FastForward size={18} />
+                {simSpeed === 200 ? 'FAST' : 'NORMAL'}
               </button>
             </div>
           </div>
-          <div ref={scrollRef} className="flex-1 p-4 md:p-6 space-y-3 md:space-y-4 overflow-y-auto scroll-smooth">
+          <div ref={scrollRef} className="flex-1 p-6 md:p-10 space-y-4 md:space-y-6 overflow-y-auto scroll-smooth custom-scrollbar">
             <AnimatePresence initial={false}>
               {match.events.slice().reverse().map((event, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className={`p-3 md:p-4 rounded-xl md:rounded-2xl border ${
-                    event.type === 'Goal' ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-800/30 border-transparent'
+                  initial={{ opacity: 0, x: -30, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  className={`p-5 md:p-8 rounded-[2rem] border transition-all duration-500 ${
+                    event.type === 'Goal' ? 'bg-emerald-500/20 border-emerald-500/40 shadow-lg shadow-emerald-900/20' : 'bg-white/5 border-white/5'
                   }`}
                 >
-                  <div className="flex items-start gap-3 md:gap-4">
-                    <span className="text-blue-400 font-mono font-bold w-6 md:w-8 text-sm md:text-base">{event.minute}'</span>
-                    <div>
-                      <div className={`font-bold text-[10px] md:text-sm ${event.type === 'Goal' ? 'text-emerald-400' : 'text-white'}`}>
+                  <div className="flex items-start gap-5 md:gap-8">
+                    <div className={`font-mono font-black text-xl md:text-3xl italic ${event.type === 'Goal' ? 'text-white' : 'text-emerald-400'}`}>
+                      {event.minute}<span className="text-sm opacity-50 font-sans tracking-widest leading-none">'</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className={`font-black text-xs md:text-sm tracking-widest mb-2 ${event.type === 'Goal' ? 'text-white' : 'text-emerald-500/80 uppercase'}`}>
                         {event.type.toUpperCase()}
                       </div>
-                      <p className="text-slate-300 text-xs md:text-base mt-0.5 md:mt-1">{event.description}</p>
+                      <p className={`text-sm md:text-xl font-bold leading-relaxed ${event.type === 'Goal' ? 'text-white' : 'text-slate-300'}`}>
+                        {event.description}
+                      </p>
                     </div>
+                    {event.type === 'Goal' && (
+                      <div className="p-3 bg-white text-emerald-600 rounded-2xl shadow-xl animate-bounce">
+                        <Trophy size={24} fill="currentColor" />
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -127,57 +153,63 @@ export default function MatchSimulationView({
         </section>
 
         {/* Stats & Actions */}
-        <section className="shrink-0 space-y-4 md:space-y-6 flex flex-col">
-          <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-slate-900/50 border border-slate-800">
-            <h3 className="text-sm md:text-lg font-bold text-white mb-4 md:mb-6">Statistics</h3>
-            <div className="space-y-4 md:space-y-6">
+        <section className="shrink-0 space-y-6 md:space-y-10 flex flex-col">
+          <div className="p-8 md:p-10 rounded-[2.5rem] glass-card">
+            <h3 className="text-lg md:text-xl font-black text-white mb-8 italic uppercase tracking-tighter">Performance Data</h3>
+            <div className="space-y-8 md:space-y-12">
               <div>
-                <div className="flex justify-between text-[10px] text-slate-500 uppercase font-bold mb-1 md:mb-2">
+                <div className="flex justify-between text-[10px] text-slate-500 uppercase font-black tracking-widest mb-4">
+                  <span>Ball Control</span>
                   <span>Possession</span>
                 </div>
-                <div className="flex h-2 md:h-3 rounded-full overflow-hidden bg-slate-800">
+                <div className="flex h-3 md:h-5 rounded-full overflow-hidden bg-white/5 p-1 border border-white/5 shadow-inner">
                   <div
-                    className="bg-blue-500 transition-all duration-1000"
+                    className="bg-emerald-500 transition-all duration-1000 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"
                     style={{ width: `${match.stats.homePossession}%` }}
                   />
                   <div
-                    className="bg-red-500 transition-all duration-1000"
+                    className="bg-slate-700 transition-all duration-1000 rounded-full ml-1"
                     style={{ width: `${match.stats.awayPossession}%` }}
                   />
                 </div>
-                <div className="flex justify-between mt-1 md:mt-2 text-xs md:text-sm font-bold text-white">
+                <div className="flex justify-between mt-3 text-lg md:text-2xl font-black text-white italic tracking-tighter">
                   <span>{Math.round(match.stats.homePossession)}%</span>
                   <span>{Math.round(match.stats.awayPossession)}%</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-slate-800/50 text-center">
-                  <div className="text-xl md:text-2xl font-bold text-white">{match.stats.homeShots}</div>
-                  <div className="text-[8px] md:text-[10px] text-slate-500 uppercase tracking-widest mt-1">Shots (H)</div>
+              <div className="grid grid-cols-2 gap-4 md:gap-6">
+                <div className="p-6 md:p-8 rounded-3xl bg-white/5 border border-white/5 text-center shadow-inner">
+                  <div className="text-3xl md:text-5xl font-black text-white italic tracking-tighter leading-none mb-2">{match.stats.homeShots}</div>
+                  <div className="text-[10px] text-emerald-400/60 uppercase tracking-widest font-black">Shots on Goal</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-slate-800/50 text-center">
-                  <div className="text-xl md:text-2xl font-bold text-white">{match.stats.awayShots}</div>
-                  <div className="text-[8px] md:text-[10px] text-slate-500 uppercase tracking-widest mt-1">Shots (A)</div>
+                <div className="p-6 md:p-8 rounded-3xl bg-white/5 border border-white/5 text-center shadow-inner">
+                  <div className="text-3xl md:text-5xl font-black text-white italic tracking-tighter leading-none mb-2">{match.stats.awayShots}</div>
+                  <div className="text-[10px] text-slate-600 uppercase tracking-widest font-black">Counter Attacks</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col justify-end">
+          <div className="flex-1 flex flex-col justify-end">
             {match.status === 'Finished' ? (
               <motion.button
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 onClick={onClose}
-                className="w-full py-3 md:py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl md:rounded-2xl font-bold text-base md:text-lg shadow-xl shadow-blue-900/40 flex items-center justify-center gap-3 transition-all active:scale-95"
+                className="w-full py-5 md:py-8 bg-emerald-600 hover:bg-emerald-500 text-white rounded-[2rem] font-black text-lg md:text-2xl italic uppercase tracking-tighter shadow-2xl shadow-emerald-900/40 flex items-center justify-center gap-4 transition-all active:scale-95 group overflow-hidden relative"
               >
-                Done
-                <ChevronRight size={18} />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                Return to Club
+                <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform" />
               </motion.button>
             ) : (
-              <div className="p-3 md:p-6 rounded-xl md:rounded-3xl bg-blue-600/10 border border-blue-500/20 text-center">
-                <p className="text-[10px] md:text-sm text-blue-400 italic">Match in progress...</p>
+              <div className="p-6 md:p-8 rounded-[2rem] bg-emerald-500/5 border border-emerald-500/10 text-center backdrop-blur-md">
+                <div className="flex items-center justify-center gap-3 text-emerald-400 font-black italic uppercase tracking-widest text-sm">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                  Match Engine Live
+                </div>
+                <p className="text-[10px] text-emerald-500/40 mt-2 uppercase tracking-[0.3em]">Processing Tactical Nodes</p>
               </div>
             )}
           </div>

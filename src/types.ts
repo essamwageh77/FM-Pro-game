@@ -51,6 +51,7 @@ export interface Player {
   isYouth: boolean;
   faceUrl?: string;
   history: PlayerHistory[];
+  onFieldPosition?: string | null;
 }
 
 export interface PlayerHistory {

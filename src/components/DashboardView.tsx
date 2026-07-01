@@ -15,29 +15,33 @@ export default function DashboardView({ team, squad, onNavigateToMarket }: Dashb
   const totalValue = squad.reduce((sum, p) => sum + p.marketValue, 0);
 
   const stats = [
-    { label: 'Team Strength', value: avgRating, icon: Trophy, color: 'text-yellow-400' },
-    { label: 'Squad Size', value: squad.length, icon: Users, color: 'text-blue-400' },
-    { label: 'Market Value', value: `€${(totalValue / 1000).toFixed(0)}k`, icon: TrendingUp, color: 'text-emerald-400' },
-    { label: 'Available Budget', value: `€${(team.budget / 1000).toFixed(0)}k`, icon: DollarSign, color: 'text-blue-400' },
+    { label: 'Team Strength', value: avgRating, icon: Trophy, color: 'text-emerald-400' },
+    { label: 'Squad Size', value: squad.length, icon: Users, color: 'text-emerald-300' },
+    { label: 'Market Value', value: `€${(totalValue / 1000).toFixed(0)}k`, icon: TrendingUp, color: 'text-emerald-500' },
+    { label: 'Available Budget', value: `€${(team.budget / 1000).toFixed(0)}k`, icon: DollarSign, color: 'text-emerald-400' },
   ];
 
   if (squad.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-8">
-        <div className="w-24 h-24 rounded-full bg-blue-600/10 flex items-center justify-center border border-blue-500/20 shadow-2xl shadow-blue-500/10">
-          <ShoppingCart className="text-blue-400" size={48} />
+      <div className="flex flex-col items-center justify-center py-20 text-center space-y-8 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full -z-10" />
+        <div className="w-32 h-32 rounded-full bg-emerald-600/10 flex items-center justify-center border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
+          <ShoppingCart className="text-emerald-400" size={56} />
         </div>
         <div className="space-y-4">
-          <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter">Build Your Squad</h2>
-          <p className="text-slate-400 max-w-md mx-auto font-medium">
-            Your club is empty. You have <span className="text-emerald-400 font-bold">€1,000,000</span> to sign your first 11 players from the transfer market.
+          <h2 className="text-6xl font-black text-white italic uppercase tracking-tighter leading-tight">
+            Build Your <span className="text-emerald-400">Legacy</span>
+          </h2>
+          <p className="text-slate-300 max-w-md mx-auto font-medium text-lg leading-relaxed">
+            The dressing room is silent. You have <span className="text-emerald-400 font-bold">€1.0M</span> to assemble your championship-winning squad.
           </p>
         </div>
         <button
           onClick={onNavigateToMarket}
-          className="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-blue-900/40 transition-all active:scale-95 flex items-center gap-3"
+          className="px-12 py-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-emerald-900/40 transition-all active:scale-95 flex items-center gap-3 group relative overflow-hidden"
         >
-          Go to Transfer Market
+          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          Enter Transfer Market
           <TrendingUp size={20} />
         </button>
       </div>
@@ -48,44 +52,56 @@ export default function DashboardView({ team, squad, onNavigateToMarket }: Dashb
     <div className="space-y-12">
       <header className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter">Club Dashboard</h2>
-          <p className="text-slate-400 font-medium">The state of {team.name} management.</p>
+          <h2 className="text-4xl font-black text-white italic uppercase tracking-tighter leading-none mb-2">Club Dashboard</h2>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <p className="text-slate-400 font-semibold tracking-wide uppercase text-xs">Managing {team.name} • Session Active</p>
+          </div>
         </div>
       </header>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-4 md:p-8 rounded-2xl md:rounded-3xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl group hover:border-blue-500/30 transition-all"
+            className="p-6 md:p-8 rounded-3xl glass-card group hover:border-emerald-500/40 transition-all duration-500 cursor-default"
           >
-            <div className="flex items-center justify-between mb-3 md:mb-6">
-              <div className={`p-2 md:p-3 rounded-lg md:rounded-2xl bg-slate-950/50 ${stat.color} border border-white/5`}>
-                <stat.icon className="w-4 h-4 md:w-6 md:h-6" />
+            <div className="flex items-center justify-between mb-4 md:mb-8">
+              <div className={`p-3 md:p-4 rounded-2xl bg-white/5 ${stat.color} border border-white/5 shadow-inner`}>
+                <stat.icon className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <span className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">{stat.label}</span>
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{stat.label}</span>
             </div>
-            <div className="text-xl md:text-3xl font-black text-white">{stat.value}</div>
+            <div className="text-2xl md:text-4xl font-black text-white tracking-tight">{stat.value}</div>
           </motion.div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-1 gap-12">
         <section className="space-y-8">
-          <h3 className="text-sm md:text-xl font-black text-white italic uppercase tracking-tighter flex items-center gap-3">
-            <Trophy className="text-yellow-400" size={24} />
-            Top Performance
-          </h3>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-8">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl md:text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-3">
+              <Trophy className="text-emerald-400" size={28} />
+              Star Performers
+            </h3>
+            <div className="h-px flex-1 mx-8 bg-gradient-to-r from-emerald-500/30 to-transparent" />
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-8">
             {squad.sort((a, b) => b.rating - a.rating).slice(0, 5).map((player) => (
-              <PlayerCard 
-                key={player.id} 
-                player={player} 
-                showPrice={false} 
-              />
+              <div key={player.id} className="space-y-3">
+                <PlayerCard 
+                  player={player} 
+                  showPrice={false} 
+                />
+                <div className="text-center">
+                  <span className="text-slate-500 font-mono font-bold text-[10px] md:text-xs tracking-widest uppercase">
+                    €{(player.marketValue / 1000).toFixed(0)}K
+                  </span>
+                </div>
+              </div>
             ))}
           </div>
         </section>

@@ -56,51 +56,51 @@ export default function ScoutingView({ players, myTeam, setSquad, setScoutingPla
           <p className="text-slate-400 font-medium">Acquire world-class talent to redefine your tactical identity.</p>
         </div>
         
-        <div className="px-6 py-4 rounded-2xl bg-blue-600/10 border border-blue-500/20 backdrop-blur-xl flex items-center gap-3 self-start">
-          <Wallet className="text-blue-400" size={20} />
+        <div className="px-6 py-4 rounded-2xl bg-emerald-600/10 border border-emerald-500/20 backdrop-blur-xl flex items-center gap-3 self-start shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+          <Wallet className="text-emerald-400" size={24} />
           <div>
-            <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Club Budget</div>
-            <div className="text-xl font-black text-white">€{(myTeam.budget / 1000).toFixed(0)}k</div>
+            <div className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Available Funds</div>
+            <div className="text-2xl font-black text-white">€{(myTeam.budget / 1000).toFixed(0)}k</div>
           </div>
         </div>
       </header>
 
       {/* Filters Section */}
-      <div className="space-y-4">
-        <div className="relative">
-          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+      <div className="space-y-6">
+        <div className="relative group">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" size={20} />
           <input
             type="text"
-            placeholder="Search by name, position or nationality..."
+            placeholder="Scout by name, position or nationality..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-16 pr-6 py-5 bg-slate-900/50 border border-slate-800 rounded-3xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all backdrop-blur-md"
+            className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/5 rounded-3xl text-white font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all backdrop-blur-md placeholder:text-slate-600 shadow-inner"
           />
         </div>
 
         <div className="flex flex-wrap gap-2 items-center">
-          <div className="flex items-center gap-2 mr-2 text-slate-500 font-bold text-[10px] uppercase tracking-widest">
-            <Filter size={14} />
-            Position:
+          <div className="flex items-center gap-2 mr-3 text-slate-500 font-black text-[10px] uppercase tracking-widest">
+            <Filter size={14} className="text-emerald-500/50" />
+            Specialization:
           </div>
           <button
             onClick={() => setActivePosition('ALL')}
-            className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
               activePosition === 'ALL'
-                ? 'bg-blue-500 text-white shadow-lg shadow-blue-900/40'
-                : 'bg-slate-900/50 text-slate-400 hover:text-slate-200 border border-slate-800'
+                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/40 border-emerald-500'
+                : 'bg-white/5 text-slate-400 border-white/5 hover:border-white/10 hover:text-white'
             }`}
           >
-            All
+            All Talent
           </button>
           {positions.map(pos => (
             <button
               key={pos}
               onClick={() => setActivePosition(pos)}
-              className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+              className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
                 activePosition === pos
-                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-900/40'
-                  : 'bg-slate-900/50 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/40 border-emerald-500'
+                  : 'bg-white/5 text-slate-400 border-white/5 hover:border-white/10 hover:text-white'
               }`}
             >
               {pos}
@@ -115,7 +115,7 @@ export default function ScoutingView({ players, myTeam, setSquad, setScoutingPla
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 font-bold"
+            className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 font-bold shadow-lg"
           >
             <AlertCircle size={20} />
             {error}
@@ -123,30 +123,36 @@ export default function ScoutingView({ players, myTeam, setSquad, setScoutingPla
         )}
       </AnimatePresence>
 
-      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-8">
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-8">
         {filteredPlayers.map((player) => (
           <motion.div 
             layout
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             key={player.id} 
-            className="space-y-3 md:space-y-4"
+            className="space-y-4"
           >
             <PlayerCard player={player} />
+            <div className="text-center">
+              <span className="text-emerald-400 font-mono font-bold text-xs md:text-sm tracking-widest bg-emerald-500/5 px-3 py-1 rounded-full border border-emerald-500/10">
+                €{(player.marketValue / 1000).toFixed(0)}K
+              </span>
+            </div>
             <button
               onClick={() => handleBuyPlayer(player)}
-              className="w-full py-2.5 md:py-3 bg-white text-slate-950 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-400 hover:text-white transition-all active:scale-95 shadow-xl shadow-black/20"
+              className="w-full py-2.5 md:py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-emerald-900/20 border border-emerald-500/20 group relative overflow-hidden"
             >
-              Sign Player
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              Sign Talent
             </button>
           </motion.div>
         ))}
       </div>
       
       {filteredPlayers.length === 0 && (
-        <div className="py-20 text-center">
-          <div className="text-slate-500 font-bold mb-2">No talent found matching your criteria.</div>
-          <button onClick={() => { setSearchTerm(''); setActivePosition('ALL'); }} className="text-blue-400 font-bold text-sm hover:underline">Clear all filters</button>
+        <div className="py-24 text-center">
+          <div className="text-slate-500 font-black text-lg uppercase tracking-tighter mb-4 italic">No prospects found in these regions.</div>
+          <button onClick={() => { setSearchTerm(''); setActivePosition('ALL'); }} className="text-emerald-400 font-black text-sm hover:underline uppercase tracking-widest">Reset Scouting Filters</button>
         </div>
       )}
     </div>
