@@ -17,6 +17,8 @@ export default defineConfig(() => {
           name: 'FM Pro Manager',
           short_name: 'FM Pro',
           description: 'A professional football management simulation',
+          start_url: '/',
+          scope: '/',
           theme_color: '#0f172a',
           background_color: '#0f172a',
           display: 'standalone',
